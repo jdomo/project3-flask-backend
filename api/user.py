@@ -22,7 +22,7 @@ def save_picture(form_picture):
 
   picture_name = random_hex + f_ext
 
-  file_path_for_avatar = os.path.join(os.getcwd(), 'static/profile_pics' + picture_name)
+  file_path_for_avatar = os.path.join(os.getcwd(), 'static/profile_pics/' + picture_name)
 
   output_size = (125, 175)
 
