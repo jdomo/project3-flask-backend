@@ -44,14 +44,14 @@ def register():
 
   payload['email'].lower()
   try: 
-    models.User.get(models.User.email === payload['email'])
+    models.User.get(models.User.email == payload['email'])
 
     return jsonify(data={}, status={"code": 401, "message": "Username/email taken!"})
 
-    except models.DoesNotExist:
+  except models.DoesNotExist:
       payload['password'] = generate_password_hash(payload['password'])
 
-      file_picture_path = save_picture(dict_file['file'])
+      file_picture_path = save_picture(dict_file['img'])
 
       payload['image'] = file_picture_path
 

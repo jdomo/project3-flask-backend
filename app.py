@@ -6,9 +6,10 @@ from flask_login import LoginManager
 import models
 
 from api.user import user
+from api.api import album
 
 DEBUG = True
-PORT = 5000
+PORT = 8000
 
 login_manager = LoginManager()
 
@@ -25,16 +26,11 @@ def load_user(userid):
   except models.DoesNotExist:
     return None
 
-CORS(api, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(album, origins=['http://localhost:3000'], supports_credentials=True)
 CORS(user, origins=['http://localhost:3000'], supports_credentials=True)
 
-app.register_blueprint(api)
+app.register_blueprint(album)
 app.register_blueprint(user)
-
-
-@app.route('/')
-def index():
-  return 'CRAPPY ALBUM COVERS'
 
 # 3
 @app.before_request
@@ -48,6 +44,11 @@ def after_request(response):
   """CLOSE CONNECTION AFTER REQUEST COMPLETE"""
   g.db.close()
   return response
+
+@app.route('/')
+def index():
+  return 'CRAPPY ALBUM COVERS'
+
   
 
 # 1
