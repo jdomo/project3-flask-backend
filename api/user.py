@@ -69,7 +69,7 @@ def register():
 
       return jsonify(data=user_dict, status={"code": 201, "message": "Great Success"});
 
-@user.route('/login', methods=["GET"])
+@user.route('/login', methods=["POST"])
 def login():
   payload = request.get_json()
   print(payload, '<--- payload from login in user.py')

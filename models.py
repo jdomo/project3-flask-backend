@@ -19,6 +19,7 @@ class Album(Model):
   artist = CharField()
   title = CharField()
   created_at = DateTimeField(default=datetime.datetime.now)
+  image= CharField()
   created_by = ForeignKeyField(User, backref='albums')
 
   class Meta:
@@ -26,6 +27,7 @@ class Album(Model):
 
 def initialize():
   DATABASE.connect()
+  # DATABASE.drop_tables([User, Album])
   DATABASE.create_tables([User, Album], safe=True)
   print("TABLES CREATED!!")
   DATABASE.close()
