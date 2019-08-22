@@ -68,3 +68,20 @@ def register():
       del user_dict['password']
 
       return jsonify(data=user_dict, status={"code": 201, "message": "Great Success"});
+
+@user.route('/login', methods=["GET"])
+def login():
+  payload = request.get_json()
+  print(payload, '<--- payload from login in user.py')
+  try:
+    user = models.User.get(models.User.email == payload['email'])
+    user_dict = model_to_dict(user)
+    if(check_password_hash(user_dict['password'], payload['password'])):
+      del user_dict['password']
+      login_user(user)
+      print(user, 'this is user')
+      return jsonify(data=user_dict, status={"code": 200, "message": "Success"})
+    else:
+      return jsonify(data={}, status={"code": 401, "message": "Username or password incorrect"})
+  except models.DoesNotExist:
+    return jsonify(data={}, status={"code": 401, "message": "Username or password incorrect"})
