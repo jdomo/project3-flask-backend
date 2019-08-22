@@ -2,8 +2,27 @@ import models
 
 from flask import Blueprint, request, jsonify
 from playhouse.shortcuts import model_to_dict
+from flask_login import current_user
+
+import os
+import sys
+import secrets
+
+from PIL import Image
 
 album = Blueprint('album', 'albums', url_prefix="/api")
+
+def save_picture(form_picture):
+  random_hex = secrets.token_hex(8)
+  f_name, f_ext = os.path.splitext(form_picture.filename)
+  picture_name = random_hex + f_ext
+  file_path_for_avatar = os.path.join(os.getcwd(), 'static/album_pics/' + picture_name)
+  output_size = (125, 175)
+  i = Image.open(form_picture)
+  i.thumbnail(output_size)
+  i.save(file_path_for_avatar)
+
+  return picture_name
 
 @album.route('/', methods=["GET"])
 def get_all_albums():
@@ -17,6 +36,9 @@ def get_all_albums():
 def create_album():
 
     payload = request.get_json()
+    print(payload)
+    print(current_user.get_id(), '<---current user id')
+    payload['created_by'] = current_user.get_id()
     album = models.Album.create(**payload)
     album_dict = model_to_dict(album)
 

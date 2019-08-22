@@ -16,13 +16,15 @@ login_manager = LoginManager()
 #initialize instance of Flask class
 app = Flask(__name__, static_url_path="", static_folder="static")
 
-app.secret_key = 'RANDOM STRING'
+app.secret_key = '123'
 login_manager.init_app(app)
 @login_manager.user_loader
 
 def load_user(userid):
   try:
-    return models.user.get(models.User.id == userid)
+    print(models.User.id, '<-- models.User.id in load_user')
+    print(userid, '<-- userid in load_user')
+    return models.User.get(models.User.id == userid)
   except models.DoesNotExist:
     return None
 
