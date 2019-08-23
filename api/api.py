@@ -61,7 +61,8 @@ def update_album(id):
 
 @album.route('/<id>', methods=["DELETE"])
 def delete_album(id):
+  deleted_album = models.Album.get_by_id(id)
   delete_album = models.Album.delete().where(models.Album.id == id)
   delete_album.execute()
 
-  return jsonify(data="resource successfully deleted", status={"code": 200, "message": "Album successfully deleted"})
+  return jsonify(data=model_to_dict(deleted_album), status={"code": 200, "message": "Album successfully deleted"})
