@@ -1,10 +1,12 @@
 # 2
-
+import os
+from playhouse.db_url import connect
 from peewee import *
 from flask_login import UserMixin
 import datetime
 
-DATABASE = SqliteDatabase('albums.sqlite')
+# DATABASE = SqliteDatabase('albums.sqlite') #pre-deploy
+DATABASE = connect(os.environ.get('DATABASE_URL'))
 
 class User(UserMixin, Model):
   username = CharField(unique=True)

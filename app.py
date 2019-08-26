@@ -1,4 +1,5 @@
 # 1
+import os
 from flask import Flask, g
 from flask_cors import CORS
 from flask_login import LoginManager
@@ -51,7 +52,9 @@ def after_request(response):
 def index():
   return 'CRAPPY ALBUM COVERS'
 
-  
+if 'ON_HEROKU' in os.environ:
+  print('hitting')
+  models.initialize()
 
 # 1
 if __name__ == '__main__':
