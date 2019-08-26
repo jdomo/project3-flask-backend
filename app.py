@@ -29,8 +29,8 @@ def load_user(userid):
   except models.DoesNotExist:
     return None
 
-CORS(album, origins=['http://localhost:3000'], supports_credentials=True)
-CORS(user, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(album, origins=['http://localhost:3000', 'https://wwac.herokuapp.com'], supports_credentials=True)
+CORS(user, origins=['http://localhost:3000', 'https://wwac.herokuapp.com'], supports_credentials=True)
 
 app.register_blueprint(album)
 app.register_blueprint(user)
