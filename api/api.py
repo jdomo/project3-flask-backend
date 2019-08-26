@@ -53,6 +53,9 @@ def get_album(id):
 @album.route('/<id>', methods=["PUT"])
 def update_album(id):
     payload = request.get_json()
+    print(payload, '<--- hitting PUT route on backend')
+    print(current_user.get_id(), '<---current user id')
+    payload['created_by'] = current_user.get_id()
     query = models.Album.update(**payload).where(models.Album.id == id)
     query.execute()
 
